@@ -1,0 +1,39 @@
+/* Header */
+
+nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width:100vw;
+	background-color:#00AACC;
+
+	position:fixed;
+	box-shadow: 3px 0 5px rgba(0,0,0,0.3);
+}
+
+nav ul {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	list-style-type: none;
+	margin:0;
+	padding:0;
+	width:1080px;
+	max-width: 1080px;
+	padding:16px;
+}
+nav li a{
+	text-decoration: none;
+	color:white;
+	text-transform: uppercase;
+	padding-right: 32px;
+	padding:13px 16px;
+	border-bottom:solid 3px transparent;
+}
+nav li a:hover{
+	border-bottom:solid 3px white;
+}
+.nav-spacer {
+    height: 64px;
+}

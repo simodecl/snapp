@@ -1,0 +1,53 @@
+video, canvas {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  margin-left: -250px; }
+
+body {
+  font-family: 'roboto', sans-serif;
+  color: black;
+  display: block; }
+
+h1 {
+  font-size: 70px;
+  margin: -10px; }
+
+video {
+  border: 5px solid white; }
+
+button {
+  padding: 10px 10px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 5px;
+  font-size: 25px;
+  background-color: #000000;
+  border-bottom: 5px solid #000000;
+  color: white;
+  text-decoration: none; }
+
+button:active {
+  transform: translate(0px, 5px);
+  border-bottom: 1px solid; }
+
+.container {
+  display: grid;
+  grid-row-gap: 10px;
+  grid-template-columns: 1fr;
+  text-align: center; }
+
+#img-output {
+  display: block;
+  clear: both;
+  width: auto;
+  height: auto;
+  position: relative; }
+
+@media (max-width: 800px) {
+  h1 {
+    font-size: 50px; } }
+
+@media (max-width: 550px) {
+  h1 {
+    font-size: 30px; } }
