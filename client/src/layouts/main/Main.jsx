@@ -14,6 +14,7 @@ import './Main.css';
 Components
 */
 import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
 
 /*
 Page components
@@ -29,6 +30,7 @@ class Main extends Component {
           <Route exact path='/' component={HomePage}/>
           <Redirect from="/home" to="/"/>
         </Switch>
+        <Footer />
       </div>
     );
   }

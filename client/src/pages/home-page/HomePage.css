@@ -6,8 +6,8 @@ video, canvas {
   margin-left: -250px; }
 
 body {
-  font-family: 'roboto', sans-serif;
-  color: black;
+  font-family: 'Calibri', sans-serif;
+  color: #284a50;
   display: block; }
 
 h1 {
@@ -43,6 +43,10 @@ button:active {
   width: auto;
   height: auto;
   position: relative; }
+
+.column {
+  display: flex;
+  flex-direction: column; }
 
 @media (max-width: 800px) {
   h1 {
