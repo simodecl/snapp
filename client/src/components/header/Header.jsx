@@ -10,8 +10,10 @@ class Header extends Component {
 		return (
 			<div>
 				<nav>
-					<img src="/logo.svg" alt="Logo" />
-					<span>Snapp</span>
+					<a href="/">
+						<img src="/logo.svg" alt="Logo" />
+						<span>Snapp</span>
+					</a>
 				</nav>
 				<div className="nav-spacer"></div>
 			</div>

@@ -1,14 +1,19 @@
-video, canvas {
+video,
+canvas {
   display: block;
   margin: 0 auto;
   position: absolute;
   left: 50%;
   margin-left: -250px; }
 
+.main {
+  max-height: calc(100vh - 186px); }
+
 body {
-  font-family: 'Calibri', sans-serif;
-  color: #284a50;
-  display: block; }
+  color: white;
+  display: block;
+  background-color: #00AACC;
+  font-family: 'Calibri', sans-serif; }
 
 h1 {
   font-size: 70px;
@@ -18,18 +23,20 @@ video {
   border: 5px solid white; }
 
 button {
-  padding: 10px 10px;
-  margin: 0px 10px 10px 0px;
-  border-radius: 5px;
-  font-size: 25px;
-  background-color: #000000;
-  border-bottom: 5px solid #000000;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin: 10px;
+  border-radius: 32px;
+  font-size: 16px;
+  background-color: transparent;
+  border: 3px solid white;
   color: white;
   text-decoration: none; }
 
-button:active {
-  transform: translate(0px, 5px);
-  border-bottom: 1px solid; }
+button:hover {
+  background-color: white;
+  color: #00AACC; }
 
 .container {
   display: grid;

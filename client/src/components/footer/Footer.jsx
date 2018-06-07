@@ -10,30 +10,28 @@ class Footer extends Component {
 		return (
 			<footer>
 				<div className="social">
-					<a href="https://www.facebook.com/pages/Arteveldehogeschool/101205926589914" target="_blank" className="icon fa-stack fa-lg">
-						<i className="fa fa-circle fa-stack-2x fa-inverse"></i>
-						<i className="fab fa-facebook fa-stack-1x faa-pulse animated-hover "></i>
+					<a href="https://www.facebook.com/pages/Arteveldehogeschool/101205926589914" target="_blank">
+						<i className="fab fa-facebook"></i>
 					</a>
-					<a href="https://www.instagram.com/arteveldehogeschool/" target="_blank" className="icon fa-stack fa-lg">
-						<i className="fa fa-circle fa-stack-2x fa-inverse"></i>
-						<i className="fab fa-instagram fa-stack-1x faa-pulse animated-hover "></i>
+					<a href="https://www.instagram.com/arteveldehogeschool/" target="_blank">
+						<i className="fab fa-instagram"></i>
 					</a>
-					<a href="https://twitter.com/ArteveldehsGent" target="_blank" className="icon fa-stack fa-lg">
-						<i className="fa fa-circle fa-stack-2x fa-inverse"></i>
-						<i className="fab fa-twitter fa-stack-1x faa-pulse animated-hover "></i>
+					<a href="https://twitter.com/ArteveldehsGent" target="_blank">
+						<i className="fab fa-twitter"></i>
 					</a>
-					<a href="https://plus.google.com/106559721502057882839/posts" target="_blank" className="icon fa-stack fa-lg">
-						<i className="fa fa-circle fa-stack-2x fa-inverse"></i>
-						<i className="fab fa-google fa-stack-1x faa-pulse animated-hover "></i>
+					<a href="https://plus.google.com/106559721502057882839/posts" target="_blank">
+						<i className="fab fa-google"></i>
 					</a>
-					<a href="https://www.youtube.com/user/Arteveldehogeschool" target="_blank" className="icon fa-stack fa-lg">
-						<i className="fa fa-circle fa-stack-2x fa-inverse"></i>
-						<i className="fab fa-youtube-play fa-stack-1x faa-pulse animated-hover "></i>
+					<a href="https://www.youtube.com/user/Arteveldehogeschool" target="_blank">
+						<i className="fab fa-youtube"></i>
 					</a>
-					<a href="https://www.linkedin.com/company/arteveldehogeschool" target="_blank" className="icon fa-stack fa-lg">
-						<i className="fa fa-circle fa-stack-2x fa-inverse"></i>
-						<i className="fab fa-linkedin fa-stack-1x faa-pulse animated-hover "></i>
+					<a href="https://www.linkedin.com/company/arteveldehogeschool" target="_blank">
+						<i className="fab fa-linkedin"></i>
 					</a>
+				</div>
+				<div className="subfooter">
+					<p>Webapp door&nbsp;<em>Simon Decloedt & Manaus Transez</em></p>
+					<p>in opdracht van de Arteveldehogeschool <a href="http://www.arteveldehogeschool.be/"><img src="/assets/ahs.png" alt="AHS" /></a></p>
 				</div>
 			</footer>
 		)
