@@ -157,7 +157,7 @@ class HomePage extends Component {
   };
   render () {
     return (
-      <div className="container column main">
+      <main className="container column">
         <div className="buttons">
           <button id="dog-face">Dog face</button>
           <button id="bunny-ears">Bunny ears</button>
@@ -190,7 +190,7 @@ class HomePage extends Component {
           </Stage>
         </div>
         <button id="save">Save stage</button>
-      </div>
+      </main>
     )
   }
 }

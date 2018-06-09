@@ -7,10 +7,6 @@ canvas {
 	margin-left: -250px;
 }
 
-.main{
-	max-height: calc(100vh - 186px);
-}
-
 body {
 	color: white;
 	display: block;
@@ -28,7 +24,7 @@ video {
 }
 
 button {
-	outline:none;
+	outline: none;
 	cursor: pointer;
 	padding: 8px 16px;
 	margin: 10px;
@@ -40,9 +36,9 @@ button {
 	text-decoration: none;
 }
 
-button:hover{
+button:hover {
 	background-color: white;
-	color:#00AACC;
+	color: #00AACC;
 }
 
 .container {

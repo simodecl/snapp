@@ -20,6 +20,7 @@ import Footer from '../../components/footer/Footer';
 Page components
 */
 import HomePage from '../../pages/home-page/HomePage';
+import GalleryPage from '../../pages/gallery-page/GalleryPage';
 
 class Main extends Component {
   render() {    
@@ -27,8 +28,10 @@ class Main extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path='/' component={HomePage}/>
           <Redirect from="/home" to="/"/>
+          <Route exact path='/' component={HomePage}/>
+          <Route exact path='/gallery' component={GalleryPage}/>
+          <Route path="*" component={HomePage}/>
         </Switch>
         <Footer />
       </div>

@@ -6,9 +6,6 @@ canvas {
   left: 50%;
   margin-left: -250px; }
 
-.main {
-  max-height: calc(100vh - 186px); }
-
 body {
   color: white;
   display: block;
