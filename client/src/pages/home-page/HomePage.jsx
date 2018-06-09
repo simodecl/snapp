@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Rect, Text, Transformer } from 'react-konva';
 import Konva from 'konva';
+import TransformComponent from '../../components/TransformComponent/TransformComponent';
 /*
 Component styles
 */
@@ -126,9 +127,23 @@ class HomePage extends Component {
       blob = dataURItoBlob(img_b64)
       imgOutput.src = URL.createObjectURL(blob);
     });
-
-    const transformer = this.refs.transformer;
-    transformer.attachTo(this.refs.rect)
+    const stage = this.stageRef.getStage();
+    const layer = this.overlayRef;
+    stage.on('click', (e) => {
+      // if click on empty area - remove all transformers
+      console.log(layer)
+      if (e.target === stage) {
+        stage.find('Transformer').destroy();
+        this.transformComponent = null;
+        layer.batchDraw();
+        console.log(e.target)
+        return;
+      } else {
+      this.transformComponent = <TransformComponent attachTo={e.target} />; 
+      layer.batchDraw();
+      console.log(e.target)
+      }
+    })
 
     function downloadURI(uri, name) {
       let link = document.createElement("a");
@@ -141,7 +156,7 @@ class HomePage extends Component {
     const saveButton = document.getElementById('save')
     saveButton.addEventListener('click', () => {
       
-      const dataURL = this.stageRef.getStage().toDataURL("image/png");
+      const dataURL = stage.toDataURL("image/png");
       console.log(dataURL)
       downloadURI(dataURL, 'stage.png');
   }, false);
@@ -156,6 +171,7 @@ class HomePage extends Component {
     });
   };
   render () {
+    
     return (
       <div className="container column main">
         <div className="buttons">
@@ -164,17 +180,28 @@ class HomePage extends Component {
           <button onClick={this.captureImg} id="capture">Capture</button>
         </div>
         <div id="webcam" className="webcam">
-          <video id="video" ref="cameraOutput" width="720" height="480" preload autoPlay loop muted></video>
+          <video id="video" ref="cameraOutput" width="720" height="480" autoPlay loop muted></video>
           <canvas id="canvas" ref="canvas" width="720" height="480"></canvas>
         </div>
         <div id="img-output">
           <Stage width="720" height="480" ref={node => { this.stageRef = node}}>
             <Layer ref="hiddenCanvas">
             </Layer>
-            <Layer ref="overlay">
+            <Layer ref={node => { this.overlayRef = node}}>
               <Text text="Try click on rect" />
               <Rect
-                ref="rect"
+                ref={node => { this.rectRef = node}}
+                x={100}
+                y={100}
+                width={50}
+                height={50}
+                fill={this.state.color}
+                shadowBlur={5}
+                onClick={this.handleClick}
+                draggable
+              />
+              <Rect
+                ref={node => { this.rectRef = node}}
                 x={20}
                 y={20}
                 width={50}
@@ -182,10 +209,9 @@ class HomePage extends Component {
                 fill={this.state.color}
                 shadowBlur={5}
                 onClick={this.handleClick}
-                draggable="true"
+                draggable
               />
-              <Transformer ref="transformer">
-              </Transformer>  
+              {this.transformComponent} 
             </Layer>
           </Stage>
         </div>
