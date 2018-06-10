@@ -1,10 +1,10 @@
 video,
 canvas {
-  display: block;
-  margin: 0 auto;
   position: absolute;
-  left: 50%;
-  margin-left: -250px; }
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0; }
 
 body {
   color: white;
@@ -16,7 +16,8 @@ h1 {
   font-size: 70px;
   margin: -10px; }
 
-video {
+video, #img-output {
+  box-sizing: border-box;
   border: 5px solid white; }
 
 button {
@@ -46,7 +47,8 @@ button:hover {
   clear: both;
   width: auto;
   height: auto;
-  position: relative; }
+  position: relative;
+  margin: 0 auto 0; }
 
 .column {
   display: flex;

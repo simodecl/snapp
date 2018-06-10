@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { Stage, Layer, Rect, Text, Transformer } from 'react-konva';
-import Konva from 'konva';
+import { Stage, Layer, Rect, Text } from 'react-konva';
 import TransformComponent from '../../components/TransformComponent/TransformComponent';
+import Sticker from '../../components/Sticker/Sticker';
 /*
 Component styles
 */
 import './HomePage.css';
-import bunnyears from './bunny-ears.png';
-import dogface from './dog-face.png';
+import bunnyears from '../../images/bunny-ears.png';
+import dogface from '../../images/dog-face.png';
+import pdp from '../../images/pdp.png';
+import empty from '../../images/empty.png';
 
 /* Require tracking */
 require('tracking')
@@ -18,19 +19,20 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: 'green'
+      color: 'green',
+      stickers: [],
+      transformComponent: null
     };
   }
   tracker = null
 
   componentDidMount () {
     const video = document.querySelector('#video');
+    const normalButton = document.getElementById('normal')
     const dogFaceButton = document.getElementById('dog-face')
     const bunnyEarsButton = document.getElementById('bunny-ears')
     const captureButton = document.getElementById('capture')
     let overlayArray = [];
-    const imgOutput = document.querySelector('#img-output');
-    let blob;
     let img_b64;
 
     const img = new Image()
@@ -47,13 +49,13 @@ class HomePage extends Component {
       filterHeight = height
     }
 
-    function dogFace () {
+    normalButton.addEventListener('click', () => {
+      changePic(-0.4, -0.6, 1.6, 2.4, empty )
+    })
+
+    dogFaceButton.addEventListener('click', () => {
       changePic(-0.4, -0.6, 1.6, 2.4, dogface)
-    }
-
-    dogFace()
-
-    dogFaceButton.addEventListener('click', dogFace)
+    })
 
     bunnyEarsButton.addEventListener('click', () => {
       changePic(-0.5, -0.9, 2, 2, bunnyears)
@@ -87,26 +89,6 @@ class HomePage extends Component {
     })
     const hiddenCanvas = this.refs.hiddenCanvas;
     const ctx = hiddenCanvas.getContext('2d');
-    const dataURItoBlob = (dataURI) => {
-        // convert base64/URLEncoded data component to raw binary data held in a string
-        var byteString;
-        if (dataURI.split(',')[0].indexOf('base64') >= 0)
-            byteString = atob(dataURI.split(',')[1]);
-        else
-            byteString = unescape(dataURI.split(',')[1]);
-    
-        // separate out the mime component
-        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    
-        // write the bytes of the string to a typed array
-        var ia = new Uint8Array(byteString.length);
-        for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-    
-        return new Blob([ia], {type:mimeString});
-    }
-    
 
     captureButton.addEventListener('click', () => {
       
@@ -123,10 +105,8 @@ class HomePage extends Component {
       //Get data from canvas
       img_b64 = hiddenCanvas.toDataURL('image/png');
       console.log(img_b64)
-      //Create blob from DataURL
-      blob = dataURItoBlob(img_b64)
-      imgOutput.src = URL.createObjectURL(blob);
     });
+    
     const stage = this.stageRef.getStage();
     const layer = this.overlayRef;
     stage.on('click', (e) => {
@@ -134,14 +114,15 @@ class HomePage extends Component {
       console.log(layer)
       if (e.target === stage) {
         stage.find('Transformer').destroy();
-        this.transformComponent = null;
-        layer.batchDraw();
-        console.log(e.target)
+        this.setState({
+          transformComponent: null
+        });
+        //layer.batchDraw();
+        console.log(this.state.transformComponent)
         return;
       } else {
-      this.transformComponent = <TransformComponent attachTo={e.target} />; 
-      layer.batchDraw();
-      console.log(e.target)
+        
+        console.log(this.rectRef.x, this.rectRef.y)
       }
     })
 
@@ -160,31 +141,53 @@ class HomePage extends Component {
       console.log(dataURL)
       downloadURI(dataURL, 'stage.png');
   }, false);
+  console.log(this.state)
   }
   
   componentWillUnmount () {
     this.tracker.removeAllListeners()
   }
-  handleClick = () => {
+  handleClick = (e) => {
     this.setState({
-      color: Konva.Util.getRandomColor()
+      transformComponent: <TransformComponent attachTo={e.target} />
     });
+    //this.overlayRef.batchDraw();
+    console.log(this.state.transformComponent)
   };
+  
+  addSticker = () => {
+    this.setState({
+      stickers: [<Rect
+        ref={node => { this.rectRef = node}}
+        x={20}
+        y={20}
+        width={50}
+        height={50}
+        fill={this.state.color}
+        shadowBlur={5}
+        onClick={this.handleClick}
+        draggable
+      />, ...this.state.stickers]
+    })
+    //this.overlayRef.batchDraw();
+
+  }
   render () {
     
     return (
       <main className="container column">
         <div className="buttons">
+          <button id="normal">No face filter</button>
           <button id="dog-face">Dog face</button>
           <button id="bunny-ears">Bunny ears</button>
           <button onClick={this.captureImg} id="capture">Capture</button>
         </div>
         <div id="webcam" className="webcam">
-          <video id="video" ref="cameraOutput" width="720" height="480" autoPlay loop muted></video>
-          <canvas id="canvas" ref="canvas" width="720" height="480"></canvas>
+          <video id="video" ref="cameraOutput" width="620" height="465" autoPlay loop muted></video>
+          <canvas id="canvas" ref="canvas" width="620" height="465"></canvas>
         </div>
         <div id="img-output">
-          <Stage width="720" height="480" ref={node => { this.stageRef = node}}>
+          <Stage width="610" height="455" ref={node => { this.stageRef = node}}>
             <Layer ref="hiddenCanvas">
             </Layer>
             <Layer ref={node => { this.overlayRef = node}}>
@@ -200,22 +203,13 @@ class HomePage extends Component {
                 onClick={this.handleClick}
                 draggable
               />
-              <Rect
-                ref={node => { this.rectRef = node}}
-                x={20}
-                y={20}
-                width={50}
-                height={50}
-                fill={this.state.color}
-                shadowBlur={5}
-                onClick={this.handleClick}
-                draggable
-              />
-              {this.transformComponent} 
+              <Sticker onClick={this.handleClick} image={pdp} />
+              {this.state.stickers.map((sticker) => { return sticker })}
+              {this.state.transformComponent} 
             </Layer>
           </Stage>
         </div>
-        <button id="save">Save stage</button>
+        <div><button onClick={this.addSticker} id="addSticker">Add sticker</button><button id="save">Save stage</button></div>
       </main>
     )
   }
