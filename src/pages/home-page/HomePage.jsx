@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Rect, Text } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import TransformComponent from '../../components/TransformComponent/TransformComponent';
 import Sticker from '../../components/Sticker/Sticker';
 /*
@@ -11,6 +11,9 @@ import dogface from '../../images/dog-face.png';
 import pdp from '../../images/pdp.png';
 import empty from '../../images/empty.png';
 
+const CLOUDINARY_UPLOAD_PRESET = 'snapp-gdm';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/simodecl/upload';
+
 /* Require tracking */
 require('tracking')
 require('tracking/build/data/face')
@@ -19,7 +22,6 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: 'green',
       stickers: [],
       transformComponent: null
     };
@@ -120,9 +122,6 @@ class HomePage extends Component {
         //layer.batchDraw();
         console.log(this.state.transformComponent)
         return;
-      } else {
-        
-        console.log(this.rectRef.x, this.rectRef.y)
       }
     })
 
@@ -157,17 +156,7 @@ class HomePage extends Component {
   
   addSticker = () => {
     this.setState({
-      stickers: [<Rect
-        ref={node => { this.rectRef = node}}
-        x={20}
-        y={20}
-        width={50}
-        height={50}
-        fill={this.state.color}
-        shadowBlur={5}
-        onClick={this.handleClick}
-        draggable
-      />, ...this.state.stickers]
+      stickers: [<Sticker key={new Date().toJSON()} onClick={this.handleClick} image={pdp} />, ...this.state.stickers]
     })
     //this.overlayRef.batchDraw();
 
@@ -191,19 +180,6 @@ class HomePage extends Component {
             <Layer ref="hiddenCanvas">
             </Layer>
             <Layer ref={node => { this.overlayRef = node}}>
-              <Text text="Try click on rect" />
-              <Rect
-                ref={node => { this.rectRef = node}}
-                x={100}
-                y={100}
-                width={50}
-                height={50}
-                fill={this.state.color}
-                shadowBlur={5}
-                onClick={this.handleClick}
-                draggable
-              />
-              <Sticker onClick={this.handleClick} image={pdp} />
               {this.state.stickers.map((sticker) => { return sticker })}
               {this.state.transformComponent} 
             </Layer>
