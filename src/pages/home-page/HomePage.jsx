@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Stage, Layer } from 'react-konva';
 import TransformComponent from '../../components/TransformComponent/TransformComponent';
 import Sticker from '../../components/Sticker/Sticker';
+import request from 'superagent';
 /*
 Component styles
 */
@@ -23,7 +24,8 @@ class HomePage extends Component {
     super(props);
     this.state = {
       stickers: [],
-      transformComponent: null
+      transformComponent: null,
+      picture: ''
     };
   }
   tracker = null
@@ -135,12 +137,42 @@ class HomePage extends Component {
     }
     const saveButton = document.getElementById('save')
     saveButton.addEventListener('click', () => {
-      
       const dataURL = stage.toDataURL("image/png");
       console.log(dataURL)
       downloadURI(dataURL, 'stage.png');
-  }, false);
-  console.log(this.state)
+    }, false);
+
+    const uploadButton = document.getElementById('uploadDataUrl')
+    uploadButton.addEventListener('click', () => {
+      const dataURL = stage.toDataURL("image/png");
+      let upload = request.post(CLOUDINARY_UPLOAD_URL)
+			.field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+			.field('file', dataURL);
+
+      upload.end((err, response) => {
+        if (err) {
+          console.error(err);
+        }
+
+        if (response.body.secure_url !== '') {
+          this.setState({
+            picture: response.body.secure_url
+          });
+        }
+        if (localStorage.getItem('gallery')) {
+        const gallery = new Array();
+        gallery.push(JSON.parse(localStorage.getItem('gallery')));
+        gallery.unshift({ "image_url": this.state.picture, "date": new Date() });
+        localStorage.setItem('gallery', JSON.stringify(gallery));
+        }
+        else {
+          localStorage.setItem('gallery', JSON.stringify({ "image_url": this.state.picture, "date": new Date() }));
+        }
+        window.alert(`Upload completed! View your image here: ${this.state.picture}`)
+      });
+
+    });
+  
   }
   
   componentWillUnmount () {
@@ -161,6 +193,7 @@ class HomePage extends Component {
     //this.overlayRef.batchDraw();
 
   }
+
   render () {
     
     return (
@@ -185,7 +218,7 @@ class HomePage extends Component {
             </Layer>
           </Stage>
         </div>
-        <div><button onClick={this.addSticker} id="addSticker">Add sticker</button><button id="save">Save stage</button></div>
+        <div><button onClick={this.addSticker} id="addSticker">Add sticker</button><button id="save">Save stage</button><button id="uploadDataUrl">Upload to Cloudinary</button></div>
       </main>
     )
   }
