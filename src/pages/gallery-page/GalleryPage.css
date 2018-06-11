@@ -1,25 +1,30 @@
 .gallery {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center; }
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
 
 .gallery .left,
 .gallery .right {
-  padding: 16px;
-  cursor: pointer; }
+	padding: 16px;
+	cursor: pointer;
+}
 
 .images {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 1080px; }
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: wrap;
+	max-width: 1080px;
+}
 
 .images .image {
-  width: 100px;
-  height: 100px;
-  background-size: cover;
-  background-position: center;
-  margin: 16px; }
+	width: 150px;
+	height: 150px;
+	background-size: cover;
+	background-position: center;
+	margin: 16px;
+	border: solid 4px white;
+}
