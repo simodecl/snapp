@@ -71,11 +71,11 @@ class HomePage extends Component {
 		})
 
 		nmdButton.addEventListener('click', () => {
-			changePic(-0.2, -0.6, 1.4, 1.8, nmd)
+			changePic(-0.175, -0.65, 1.4, 1.8, nmd)
 		})
 
 		avdButton.addEventListener('click', () => {
-			changePic(-0.25, -0.6, 1.4, 1.8, avd)
+			changePic(-0.2, -0.6, 1.4, 1.8, avd)
 		})
 
 		gmbButton.addEventListener('click', () => {
@@ -83,7 +83,7 @@ class HomePage extends Component {
 		})
 
 		cmoButton.addEventListener('click', () => {
-			changePic(-0.25, -0.6, 1.4, 1.8, cmo)
+			changePic(-0.2, -0.6, 1.4, 1.8, cmo)
 		})
 
 		this.tracker = new window.tracking.ObjectTracker('face')
@@ -157,11 +157,22 @@ class HomePage extends Component {
 			link.click();
 			document.body.removeChild(link);
 		}
+		function formattedDate(d) {
+			let month = String(d.getMonth() + 1);
+			let day = String(d.getDate());
+			const year = String(d.getFullYear());
+		  
+			if (month.length < 2) month = '0' + month;
+			if (day.length < 2) day = '0' + day;
+		  
+			return `${day}/${month}/${year}`;
+		  }
 		const saveButton = document.getElementById('save')
 		saveButton.addEventListener('click', () => {
 			const dataURL = stage.toDataURL("image/png");
 			console.log(dataURL)
-			downloadURI(dataURL, 'stage.png');
+			const date = new Date()
+			downloadURI(dataURL, `snapp-${formattedDate(date)}`);
 		}, false);
 
 		const uploadButton = document.getElementById('uploadDataUrl')
