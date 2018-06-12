@@ -14,6 +14,9 @@ class Header extends Component {
 						<img src="/logo.svg" alt="Logo" />
 						<span>Snapp</span>
 					</a>
+					<a className="to-gallery" href="/gallery">
+						<span>Gallery</span>
+					</a>
 				</nav>
 				<div className="nav-spacer"></div>
 			</div>

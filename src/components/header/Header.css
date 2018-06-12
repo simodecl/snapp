@@ -21,6 +21,17 @@ nav a {
 	align-items: center;
 	text-decoration: none;
 }
+.to-gallery {
+	color: #555;
+	font-size: 20px;
+	font-weight: 400;
+	margin-top: 2px;
+	margin-left: 20px;
+}
+
+.to-gallery:hover {
+	color: #EE9900;
+}
 
 nav img {
 	width: 32px;
