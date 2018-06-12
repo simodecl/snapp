@@ -25,21 +25,15 @@ class GalleryPage extends Component {
 			return (
 				<main className="container">
 					<section className="gallery">
-						<section className="left">
-							<i className="fas fa-chevron-left"></i>
-						</section>
 
 						<section className="images">
-						{this.state.images.map((el, i) => (
-							<a href="/gallery/randomurl" key={el.date}>
-								<div className="image" style={{ backgroundImage: 'url(' + el.image_url + ')' }}></div>
-							</a>
-						))}
+							{this.state.images.map((el, i) => (
+								<a href={el.image_url} target="_blank" rel="noopener noreferrer" key={el.date}>
+									<div className="image" style={{ backgroundImage: 'url(' + el.image_url + ')' }}></div>
+								</a>
+							))}
 						</section>
 
-						<section className="right">
-							<i className="fas fa-chevron-right"></i>
-						</section>
 					</section>
 				</main>
 			)
