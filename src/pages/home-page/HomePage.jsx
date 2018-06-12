@@ -256,7 +256,7 @@ class HomePage extends Component {
 				<div className={`buttons-2 ${this.state.captured ? 'buttons-2-active' : null}`}>
 					<a href="/"><button>New picture</button></a>
 					<button onClick={this.toggleStickers} id="addSticker">Add sticker</button>
-					<button id="save">Save picture</button><button id="uploadDataUrl">Upload to Cloudinary</button>
+					<button id="save">Save picture</button><button id="uploadDataUrl">Add to gallery</button>
 				</div>
         <container className="spinnerContainer"><Spinner startUpload={this.state.startUpload} finishUpload={this.state.finishUpload} /></container>
 			</main>
