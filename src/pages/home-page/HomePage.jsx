@@ -7,10 +7,15 @@ import request from 'superagent';
 Component styles
 */
 import './HomePage.css';
-import bunnyears from '../../images/bunny-ears.png';
-import dogface from '../../images/dog-face.png';
 import pdp from '../../images/pdp.png';
+import oneminute from '../../images/oneminute.png';
+import snapp from '../../images/snapp.svg';
+import laugh from '../../images/laugh.png';
 import empty from '../../images/empty.png';
+import nmd from '../../images/nmd.svg';
+import cmo from '../../images/cmo.svg';
+import avd from '../../images/avd.svg';
+import gmb from '../../images/gmb.svg';
 
 const CLOUDINARY_UPLOAD_PRESET = 'snapp-gdm';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/simodecl/upload';
@@ -25,16 +30,21 @@ class HomePage extends Component {
     this.state = {
       stickers: [],
       transformComponent: null,
-      picture: ''
+      picture: '',
+      captured: false,
+      stickerList: false
     };
+    this.toggleStickers= this.toggleStickers.bind(this);
   }
   tracker = null
 
   componentDidMount () {
     const video = document.querySelector('#video');
     const normalButton = document.getElementById('normal')
-    const dogFaceButton = document.getElementById('dog-face')
-    const bunnyEarsButton = document.getElementById('bunny-ears')
+    const nmdButton = document.getElementById('nmd')
+    const avdButton = document.getElementById('avd')
+    const gmbButton = document.getElementById('gmb')
+    const cmoButton = document.getElementById('cmo')
     const captureButton = document.getElementById('capture')
     let overlayArray = [];
     let img_b64;
@@ -57,12 +67,20 @@ class HomePage extends Component {
       changePic(-0.4, -0.6, 1.6, 2.4, empty )
     })
 
-    dogFaceButton.addEventListener('click', () => {
-      changePic(-0.4, -0.6, 1.6, 2.4, dogface)
+    nmdButton.addEventListener('click', () => {
+      changePic(-0.2, -0.6, 1.4, 1.8, nmd)
     })
 
-    bunnyEarsButton.addEventListener('click', () => {
-      changePic(-0.5, -0.9, 2, 2, bunnyears)
+    avdButton.addEventListener('click', () => {
+      changePic(-0.25, -0.6, 1.4, 1.8, avd)
+    })
+
+    gmbButton.addEventListener('click', () => {
+      changePic(-0.2, -0.75, 1.4, 1.8, gmb)
+    })
+
+    cmoButton.addEventListener('click', () => {
+      changePic(-0.25, -0.6, 1.4, 1.8, cmo)
     })
 
     this.tracker = new window.tracking.ObjectTracker('face')
@@ -96,7 +114,7 @@ class HomePage extends Component {
 
     captureButton.addEventListener('click', () => {
       
-      ctx.drawImage(video, 0, 0)
+      ctx.drawImage(video, 0, 0, 610, 455)
       console.log(overlayArray)
       if(overlayArray.length > 0) {
         console.log(overlayArray[0])
@@ -106,6 +124,7 @@ class HomePage extends Component {
         overlayArray[0].height
         )
       }  
+      this.setState({ captured: true });
       //Get data from canvas
       img_b64 = hiddenCanvas.toDataURL('image/png');
       console.log(img_b64)
@@ -160,7 +179,7 @@ class HomePage extends Component {
           });
         }
         if (localStorage.getItem('gallery')) {
-        const gallery = new Array();
+        const gallery = [];
         gallery.push(JSON.parse(localStorage.getItem('gallery')));
         gallery.unshift({ "image_url": this.state.picture, "date": new Date() });
         localStorage.setItem('gallery', JSON.stringify(gallery));
@@ -186,11 +205,16 @@ class HomePage extends Component {
     console.log(this.state.transformComponent)
   };
   
-  addSticker = () => {
+  toggleStickers() {
+    const currentState = this.state.stickerList;
+    this.setState({ stickerList: !currentState });
+  };
+
+  addSticker = (sticker) => {
     this.setState({
-      stickers: [<Sticker key={new Date().toJSON()} onClick={this.handleClick} image={pdp} />, ...this.state.stickers]
+      stickers: [<Sticker key={new Date().toJSON()} onClick={this.handleClick} image={sticker} />, ...this.state.stickers]
     })
-    //this.overlayRef.batchDraw();
+    this.toggleStickers();
 
   }
 
@@ -200,8 +224,10 @@ class HomePage extends Component {
       <main className="container column">
         <div className="buttons">
           <button id="normal">No face filter</button>
-          <button id="dog-face">Dog face</button>
-          <button id="bunny-ears">Bunny ears</button>
+          <button id="nmd">NMD</button>
+          <button id="avd">AVD</button>
+          <button id="gmb">GMB</button>
+          <button id="cmo">CMO</button>
           <button onClick={this.captureImg} id="capture">Capture</button>
         </div>
         <div id="webcam" className="webcam">
@@ -218,7 +244,17 @@ class HomePage extends Component {
             </Layer>
           </Stage>
         </div>
-        <div><button onClick={this.addSticker} id="addSticker">Add sticker</button><button id="save">Save stage</button><button id="uploadDataUrl">Upload to Cloudinary</button></div>
+        <div className={`stickerList ${this.state.stickerList ? 'stickerList-active': null}`}>
+          <img onClick={() => this.addSticker(snapp)} src={snapp} alt="sticker"/>
+          <img onClick={() => this.addSticker(oneminute)} src={oneminute} alt="sticker"/>
+          <img onClick={() => this.addSticker(pdp)} src={pdp} alt="sticker"/>
+          <img onClick={() => this.addSticker(laugh)} src={laugh} alt="sticker"/>
+        </div>
+        <div className={`buttons-2 ${this.state.captured ? 'buttons-2-active': null}`}>
+          <a href="/"><button>New picture</button></a>
+          <button onClick={this.toggleStickers} id="addSticker">Add sticker</button>
+          <button id="save">Save picture</button><button id="uploadDataUrl">Upload to Cloudinary</button>
+        </div>
       </main>
     )
   }

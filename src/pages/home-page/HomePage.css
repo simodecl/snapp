@@ -36,6 +36,13 @@ button:hover {
   background-color: white;
   color: #00AACC; }
 
+#capture, #uploadDataUrl {
+  background-color: white;
+  color: #00AACC; }
+#capture:hover, #uploadDataUrl:hover {
+  background-color: transparent;
+  color: white;
+}
 .container {
   display: grid;
   grid-row-gap: 10px;
@@ -53,7 +60,33 @@ button:hover {
 .column {
   display: flex;
   flex-direction: column; }
+.buttons-2 {
+  display: none;
+}
+.buttons-2-active {
+  display: block;
+}
 
+.stickerList {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 127px;
+  background: rgba(0,0,0,0.4);
+  width: 610px;
+  height: 455px;
+  display: none;
+}
+
+.stickerList img {
+  width: 200px;
+  margin: 10px;
+}
+.stickerList-active {
+  display: block;
+}
 @media (max-width: 800px) {
   h1 {
     font-size: 50px; } }
