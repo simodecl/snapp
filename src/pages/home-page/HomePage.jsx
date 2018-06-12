@@ -3,6 +3,7 @@ import { Stage, Layer } from 'react-konva';
 import TransformComponent from '../../components/TransformComponent/TransformComponent';
 import Sticker from '../../components/Sticker/Sticker';
 import request from 'superagent';
+import Spinner from '../../components/Spinner/Spinner';
 /*
 Component styles
 */
@@ -32,7 +33,9 @@ class HomePage extends Component {
 			transformComponent: null,
 			picture: '',
 			captured: false,
-			stickerList: false
+      stickerList: false,
+      startUpload: false,
+      finishUpload: false
 		};
 		this.toggleStickers = this.toggleStickers.bind(this);
 	}
@@ -163,6 +166,7 @@ class HomePage extends Component {
 
 		const uploadButton = document.getElementById('uploadDataUrl')
 		uploadButton.addEventListener('click', () => {
+      this.setState({ startUpload: true });
 			const dataURL = stage.toDataURL("image/png");
 			let upload = request.post(CLOUDINARY_UPLOAD_URL)
 				.field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
@@ -186,7 +190,7 @@ class HomePage extends Component {
 				else {
 					localStorage.setItem('gallery', JSON.stringify([{ "image_url": this.state.picture, "date": new Date() }]));
 				}
-				window.alert(`Upload completed! View your image here: ${this.state.picture}`)
+				this.setState({ finishUpload: true });
 			});
 
 		});
@@ -254,6 +258,7 @@ class HomePage extends Component {
 					<button onClick={this.toggleStickers} id="addSticker">Add sticker</button>
 					<button id="save">Save picture</button><button id="uploadDataUrl">Upload to Cloudinary</button>
 				</div>
+        <container className="spinnerContainer"><Spinner startUpload={this.state.startUpload} finishUpload={this.state.finishUpload} /></container>
 			</main>
 		)
 	}

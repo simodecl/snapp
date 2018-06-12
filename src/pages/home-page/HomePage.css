@@ -87,6 +87,9 @@ button:hover {
 .stickerList-active {
   display: block;
 }
+.spinnerContainer {
+  margin: 0 auto;
+}
 @media (max-width: 800px) {
   h1 {
     font-size: 50px; } }
