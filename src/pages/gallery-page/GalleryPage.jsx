@@ -9,7 +9,7 @@ class GalleryPage extends Component {
 		super(props);
 
 		this.state = {
-			images: undefined
+			images: []
 		}
 	}
 
@@ -21,7 +21,7 @@ class GalleryPage extends Component {
 	}
 
 	render() {
-		if (this.state.images.length >= 1) {
+		if (this.state.images != null && this.state.images.length >= 1) {
 			return (
 				<main className="container">
 					<section className="gallery">
